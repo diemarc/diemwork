@@ -5,6 +5,7 @@ class Index_c extends ControladorBase {
 
     public function __construct() {
         parent::__construct();
+       
         
     }
 

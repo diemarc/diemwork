@@ -9,10 +9,5 @@ class login_c extends ControladorBase {
     }
 
 
-    public function index() {
-        
-        $this->auth->checkLogin();
-        $this->vista->cargarVista("sistema", "welcome", "", true, true);
-    }
    
 }

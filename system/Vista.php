@@ -4,18 +4,17 @@ class Vista {
 
     protected $mobile;
     private $_device_type;
+    protected $_config;
 
     public function __construct() {
         $this->mobile = new Mobile_Detect;
         $this->_device_type = ($this->mobile->isMobile() ?
                         ($this->mobile->isTablet() ? 'tablet' : 'movil') : 'pc');
 
-
-        $config = Configuracion::singleton();
-        $this->_app_path = $config->get('application_path');
+        $this->_config = Configuracion::singleton();
     }
 
-    public function cargarVista($modulo, $vista, $variables = "", $load_header = true) {
+    public function cargarVista($modulo, $vista, $variables = "", $type="default") {
         $ruta = __APPFOLDER__ . "modulos" . "/"
                 . $modulo . "/v/" . $this->_device_type . "/" . $vista . ".php";
 
@@ -33,13 +32,33 @@ class Vista {
             }
         }
 
-
-        if ($load_header) {
-            require_once(__APPFOLDER__ 
-                    . "template/htmlHeader.php");
-        }
+        $layout_folder = $this->getFolderLayout($type);
+        
+        // incluimos e encabezado html
+        require_once(__APPFOLDER__ 
+                    . 'layouts/'.$layout_folder.'/_htmlHeader.php');
+        
         include($ruta);
-        require_once(__APPFOLDER__ . "template/footer.php");
+        
+        // incluimos el footer
+         require_once(__APPFOLDER__ 
+                    . 'layouts/'.$layout_folder.'/_htmlFooter.php');
+        
+    }
+    
+    private function getFolderLayout($type){
+        switch ($type) {
+            case 'default':
+                $folder = $this->_config->get('private_layout_folder');
+
+                break;
+            case 'public':
+                $folder = $this->_config->get('public_layout_folder');
+
+                break;
+        }
+        
+        return $folder;
     }
 
 }

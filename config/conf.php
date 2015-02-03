@@ -1,10 +1,4 @@
 <?php
-/**
- * Configuración de la web,seteamos las rutas de los modelos,vistas,controlador con el metodo set 
- * que está definido dentro de la clase configuración dentro del fichero Configuracion.php
- * implementamos el patron singleton, instanciamos la clase Configuracion y su metodo estatico singleton
- */
-
 $config = Configuracion::singleton();
 
 /*
@@ -41,7 +35,20 @@ $config->set('css_documentacion','template/documentacion/estiloinformes');
  *---------------------------------------------------------------
  * Muestra uso de memorias y CPU que usa el script php
  */
-$config->set("enable_profiler",false);
+$config->set('enable_profiler',false);
+
+/*
+ *---------------------------------------------------------------
+ * PLANTILLAS DE HTML 
+ *---------------------------------------------------------------
+ * Se define dos plantillas, una de la parte privada/administracion
+ * en private_layout
+ * 
+ * En public_layout la plantilla para la parte publica,
+ * la www
+ */
+$config->set('private_layout_folder','default');
+$config->set('public_layout_folder','');
 
 /*
  *---------------------------------------------------------------
@@ -54,6 +61,3 @@ $config->set('dbname','');
 $config->set('dbuser','');
 $config->set('dbpass','');
 $config->set('dbport','');
-
-
-?>
