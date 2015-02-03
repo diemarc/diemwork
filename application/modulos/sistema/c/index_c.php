@@ -10,6 +10,7 @@ class Index_c extends ControladorBase {
 
 
     public function index() {
+        $this->checkIsLogged();
         $this->vista->cargarVista("sistema", "welcome", "", true);
     }
 

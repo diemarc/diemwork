@@ -1,9 +1,6 @@
-<?php
-
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-echo "pagina de login";
+<div class="modal well">
+    <h1>Inicie sesi&oacute;n</h1>
+    <form>
+        
+    </form>
+</div>
