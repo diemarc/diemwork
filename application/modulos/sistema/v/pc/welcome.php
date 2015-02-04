@@ -10,8 +10,8 @@
 
       <div class="jumbotron">
         <h1>KeranaFramework</h1>
-        <p class="lead">Kerana ha sido configurado con &eacute;xito.</p>
-        <p><a class="btn btn-lg btn-success" href="#" role="button">Quiero aprender</a></p>
+        <p class="lead"></p>
+        <p><a class="btn btn-lg btn-success" href="#" role="button">Kerana ha sido configurado con &eacute;xito.</a></p>
       </div>
 
       <div class="row marketing">
