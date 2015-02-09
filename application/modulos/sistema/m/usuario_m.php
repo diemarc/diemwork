@@ -1,89 +1,42 @@
 <?php
-(!defined('__APPFOLDER__')) ? exit('No esta permitido el acceso directo a este archivo'):"";
+
+(!defined('__APPFOLDER__')) ? exit('No esta permitido el acceso directo a este archivo') : "";
+
 class Usuario_m extends ModeloBase {
+
+    protected $aes_key;
 
     public function __construct() {
 
-        $this->_table = "sys_base_tabla";
-        $this->_idtable = "id_tabla";
-        $this->_idkey = "";
-
+        $this->_table = 'diem_usuario';
+        $this->_idtable = 'id_usuario';
+        $this->_idkey = 'id_usuario';
+        $this->conf = Configuracion::singleton();
+        $this->aes_key = $this->conf->get('aes_key');
         parent::__construct();
     }
 
-    public function seleccionarTablas() {
-        return $this->seleccionarByQuery(" SHOW TABLES ");
-    }
+    public function seleccionarUsuarioPass($username, $password) {
 
-    public function insertarTablaBase($tabla) {
-
-        $query = " INSERT INTO " . $this->_table
-                . " (tabla) "
-                . " VALUES "
-                . " (:tabla)";
+        $query = "SELECT CONCAT_WS(' ',A.nombres,A.apellidos) AS usuario_nombre,"
+                . " A.usuario,A.id_estado"
+                . " FROM " . $this->_table . " A "
+                . " WHERE A.usuario = :username "
+                . " AND A.password = AES_ENCRYPT('$password','$this->aes_key') ";
         try {
             $rs = $this->_db->prepare($query);
-            $rs->bindParam(":tabla", $tabla);
-            $rs->execute();
-        } catch (PDOException $e) {
-            $error = New Exception($e) . "<hr>" . $query;
-            Exceptions::MostrarError("Error en " . __CLASS__ . " en el metodo " . __FUNCTION__, $error);
-        }
-    }
-
-    public function seleccionarTableByName($tablename) {
-
-        if (empty($tablename)) {
-            die("Error de parametros");
-        }
-
-        $query = "SELECT * FROM " . $this->_table . " WHERE tabla = :tableName";
-
-        try {
-            $rs = $this->_db->prepare($query);
-            $rs->bindParam(":tableName", $tablename, PDO::PARAM_STR);
+            $rs->bindParam(':username', $username, PDO::PARAM_STR);
             $rs->execute();
         } catch (PDOException $e) {
             throw New Exception($e);
-            return $e;
         }
-        return $rs->fetch(PDO::FETCH_ASSOC);
-    }
+        $row = $rs->fetch(PDO::FETCH_ASSOC);
 
-    public function getIdTabla() {
-
-        $rs = $this->seleccionarTableByName($this->_table);
-        return $rs["id_tabla"];
-    }
-
-    public function showColumns($tablename) {
-
-        $query = " SHOW COLUMNS FROM $tablename ";
-
-        try {
-            $rs = $this->_db->prepare($query);
-            $rs->bindParam(":tableName", $tablename, PDO::PARAM_STR);
-            $rs->execute();
-        } catch (PDOException $e) {
-            $error = New Exception($e) . "<hr>" . $query;
-            Exceptions::MostrarError("Error en " . __CLASS__ . " en el metodo " . __FUNCTION__, $error);
+        if ($row) {
+            return $row;
+        } else {
+            return false;
         }
-        return $rs->fetchAll();
-    }
-
-    public function showTotalReg($tablename) {
-
-        $query = " SELECT COUNT(*)AS num_reg FROM $tablename ";
-
-        try {
-            $rs = $this->_db->prepare($query);
-            $rs->execute();
-        } catch (PDOException $e) {
-            $error = New Exception($e) . "<hr>" . $query;
-            Exceptions::MostrarError("Error en " . __CLASS__ . " en el metodo " . __FUNCTION__, $error);
-        }
-        return $rs->fetch(PDO::FETCH_ASSOC);
     }
 
 }
-

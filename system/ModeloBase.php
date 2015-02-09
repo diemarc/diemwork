@@ -14,9 +14,35 @@ abstract class ModeloBase {
         $this->_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $this->_db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 
-        $this->tableId = $this->getIdTabla();
     }
 
+ /*
+ *---------------------------------------------------------------
+ * METODOS GENERALES
+  * 
+ *---------------------------------------------------------------
+ */
+ // Seleccionar de la tabla definida mediante condicion where, devuelve un resultado
+    
+    public function selectWhere($where) {
+
+        $this->_query = "SELECT  ";
+        try {
+            $rs = $this->_db->prepare($this->_query);
+            $rs->execute();
+        } catch (PDOException $e) {
+            throw New Exception($e);
+            return $e;
+        }
+        $row = $rs->fetch(PDO::FETCH_ASSOC);
+
+        return $row["num_reg_query"];
+    }
+    
+    
+    
+    
+    
     /**
      * SETTER'S
      * @return type
@@ -115,7 +141,6 @@ abstract class ModeloBase {
             $rs->execute();
         } catch (PDOException $e) {
             throw New Exception($e);
-            return $e;
         }
         return $rs->fetchAll();
     }

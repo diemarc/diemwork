@@ -49,7 +49,7 @@ define('__MODULEFOLDER__', __APPFOLDER__ . 'modulos/');
  * por defecto esta en modo desarrollo
  * posibles valores (desarrollo,produccion,testing)
  */
-define('_ENTORNO_', "desarrollo");
+define('_ENTORNO_', 'desarrollo');
 
 if (defined('_ENTORNO_')) {
     switch (_ENTORNO_) {
@@ -81,7 +81,8 @@ if (defined('_ENTORNO_')) {
  */
 
 define('_CONTROLLER_SUFIX_','_c');
+define('_MODEL_SUFIX_','_m');
 
 require_once( __COREFOLDER__
-        . "FrontControlador.php");
+        . 'FrontControlador.php');
 FrontControlador::main();

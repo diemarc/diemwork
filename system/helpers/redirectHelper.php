@@ -1,12 +1,12 @@
 <?php
-
+(!defined('__APPFOLDER__')) ? exit('No esta permitido el acceso directo a este archivo'):"";
 class Redirect {
-
 
     static function cargarControlador($modulo,$controlador,$metodo, $params = "") {
 
         $par = "";
-        $destino = "/application/index.php?mod=" . $modulo . "&c=".$controlador."&a=".$metodo;
+        //__APPFOLDER__ . "modulos" . "/"
+        $destino = "/index.php?mod=$modulo&c=".$controlador."&a=".$metodo;
         if (!empty($params)) {
             foreach ($params as $k => $p) {
                 $par = $par . $k . "=" . $p . "&";
@@ -17,5 +17,3 @@ class Redirect {
     }
 
 }
-
-?>

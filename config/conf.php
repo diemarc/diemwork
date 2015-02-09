@@ -3,6 +3,23 @@ $config = Configuracion::singleton();
 
 /*
  *---------------------------------------------------------------
+ * SUEPRUSUARIO 
+ *---------------------------------------------------------------
+ * 
+ */
+$config->set('root_user','tau');
+$config->set('root_password','5ef493b722c25a8292831d68657cb506b9d7ef45'); //invent*497 (sha1)
+
+/*
+ *---------------------------------------------------------------
+ * LLAVE AES
+ *---------------------------------------------------------------
+ * Se utiliza para encryptar las constraseñas en mysql o en php
+ */
+$config->set('aes_key','vnaT497*_N');
+
+/*
+ *---------------------------------------------------------------
  * FORMATO DE FECHAS 
  *---------------------------------------------------------------
  * 
@@ -52,12 +69,33 @@ $config->set('public_layout_folder','');
 
 /*
  *---------------------------------------------------------------
+ * PANTALLA DE LOGIN 
+ *---------------------------------------------------------------
+ * 
+ */
+
+$config->set('login_path',__APPFOLDER__.'pages/login/login.php');
+
+
+/*
+ *---------------------------------------------------------------
+ * SESIONES
+ *---------------------------------------------------------------
+ * 
+ */
+$config->set('session_enabled',true);
+$config->set('session_secure_word','%6oij178_po');
+$config->set('session_name','_keranasess');
+
+
+/*
+ *---------------------------------------------------------------
  *BASES DE DATOS
  *---------------------------------------------------------------
  * 
  */
-$config->set('host','');
-$config->set('dbname','');
-$config->set('dbuser','');
-$config->set('dbpass','');
-$config->set('dbport','');
+$config->set('host','localhost');
+$config->set('dbname','kerana_db');
+$config->set('dbuser','root');
+$config->set('dbpass','darksky');
+$config->set('dbport','3306');

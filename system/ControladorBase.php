@@ -7,21 +7,15 @@
  */
 abstract class ControladorBase {
 
-    protected $profiler;
-    protected $auth;
-    protected $vista;
+    protected $profiler,$auth,$vista,$utils,$conf,$redirect;
 
     public function __construct() {
+        $this->conf = Configuracion::singleton();
         $this->vista = new Vista();
-        $this->redirect = load::Helper("profiler");
-        $this->auth = load::Helper("login");
+        $this->redirect = load::Helper("redirect");
+        $this->auth = load::Helper("auth");
     }
 
-    protected function checkIsLogged(){
-        if(!$this->auth->checkLogin()){
-            $this->vista->cargarVista('sistema','login/login',true);
-            exit();
-        }
-    }
+    
     
 }

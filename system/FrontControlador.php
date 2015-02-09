@@ -7,6 +7,8 @@
  */
 class FrontControlador {
 
+    public $config;
+    
     public function __construct() {
 
         //$config = Configuracion::singleton();
@@ -25,9 +27,11 @@ class FrontControlador {
         require_once(__COREFOLDER__ . "/exceptions/exceptions.php");
 
         // parametros de entrada
-        $_module = filter_input(INPUT_POST, 'mod', FILTER_SANITIZE_SPECIAL_CHARS);
-        $_controller = filter_input(INPUT_POST, 'c', FILTER_SANITIZE_SPECIAL_CHARS);
-        $_action = filter_input(INPUT_POST, 'a', FILTER_SANITIZE_SPECIAL_CHARS);
+        $_module = filter_input(INPUT_GET, 'mod', FILTER_SANITIZE_SPECIAL_CHARS);
+        $_controller = filter_input(INPUT_GET, 'c', FILTER_SANITIZE_SPECIAL_CHARS);
+        $_action = filter_input(INPUT_GET, 'a', FILTER_SANITIZE_SPECIAL_CHARS);
+        
+        
 
         $config = Configuracion::singleton();
 
@@ -36,7 +40,6 @@ class FrontControlador {
         } else {
             $nombreModulo = $config->get('default_module');
         }
-
         // Recibimos como parametros el controlador
 
         if (!empty($_controller)) {
@@ -80,7 +83,7 @@ class FrontControlador {
 
         // Si todo esta bien creamos la instancia del controlador 
         // y llamamos a la accion
-
+      
         $controlador = new $nombreControlador();
         $controlador->$nombreAccion();
     }
